@@ -7,9 +7,7 @@ class SimpleScraper:
         pass
 
     def scrape(self, url):
-        if url.startswith("https://"):
-            raise exceptions.ParseError("Cannot accept https requests")
-        elif url.startswith("http://"):
+        if url.startswith("https://") or url.startswith("http://"):
             pass
         else:
             url = "http://" + url

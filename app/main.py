@@ -1,4 +1,4 @@
-from flask_api import FlaskAPI, exceptions
+from flask_api import FlaskAPI, exceptions, status
 from flask import request
 from db import *
 from scraper import SimpleScraper
@@ -23,6 +23,7 @@ def parse():
                     raise exceptions.ParseError("One of your elements is not a string")
                 else:
                     result = scraper.scrape(i)
+                    result["url"] = i
                     response.append(result)
     else:
         raise exceptions.ParseError("Enter list of urls")
@@ -47,6 +48,11 @@ def do_something_with_product():
     elif request.method == "DELETE":
         if "id" not in request.data:
             raise exceptions.ParseError("No id to delete!")
+
+        if (request.data["id"] == 0):
+            remove_all()
+            return {}, status.HTTP_204_NO_CONTENT
+
         return remove_one(request.data["id"])
 
 

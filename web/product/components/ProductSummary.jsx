@@ -8,7 +8,16 @@ export default class ProductSummary extends React.Component {
             products: []
         };
 
+        this.clear = this.clear.bind(this);
         this.removeProduct = this.removeProduct.bind(this);
+    }
+
+    clear() {
+        if (confirm("Are you sure you want to clear all of the options?")) {
+            http.delete("/products", { id: 0 }).then(() => {
+                this.setState({ products: [] });
+            });
+        }
     }
 
     removeProduct(id) {
@@ -38,7 +47,10 @@ export default class ProductSummary extends React.Component {
     render() {
         return (
             <div className="text-center">
-                <button className="btn btn-success">Push to BestBuy</button>
+                <row>
+                    <button className="btn btn-success">Push to BestBuy</button>
+                    <button onClick={ this.clear } className="btn btn-danger">Clear</button>
+                </row>
                 <div id="accordion" role="tablist" aria-multiselectable="true">
                     { this.renderProducts() }
                 </div>

@@ -28,8 +28,8 @@ def remove_one(id):
 
     return None
 
-def remove_all(request):
-    products.delete_many(request)
+def remove_all():
+    products.delete_many({})
 
 
 def add_all(products):
