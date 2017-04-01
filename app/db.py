@@ -14,7 +14,8 @@ def get_one(id):
     return product
 
 def remove_one(id):
-    products.find_one_and_delete({'_id': id})
+    deletedItem = products.find_one_and_delete({'_id': id})
+    return deletedItem
 
 def remove_all(request):
     products.delete_many(request)
