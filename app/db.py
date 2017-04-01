@@ -6,7 +6,9 @@ db = client['product_db']
 products = db['products']
 
 def add_one(request):
-    product = products.insert_one(request)
+    result = products.insert_one(request)
+    item_id = result.inserted_id
+    product = products.find_one({'_id': item_id})
     return product
 
 def get_one(id):
