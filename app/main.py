@@ -1,11 +1,10 @@
-from flask import Flask
+from flask.ext.api import FlaskAPI
 
-app = Flask(__name__)
-
+app = FlaskAPI(__name__)
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return { 'message': 'Hello World!' }
 
 
 if __name__ == '__main__':
