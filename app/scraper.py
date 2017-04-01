@@ -6,6 +6,9 @@ class SimpleScraper:
     def __init__(self):
         pass
 
+    def check_tag(self, tag):
+        return 'spec' in tag.id.lower() or 'spec' in tag.class_.lower()
+
     def scrape(self, url):
         if url.startswith("https://") or url.startswith("http://"):
             pass
@@ -35,3 +38,7 @@ class SimpleScraper:
         except AttributeError as e:
             print(e)
             raise exceptions.ParseError("No specifications found")
+
+
+if __name__ == '__main__':
+    
