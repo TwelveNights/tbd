@@ -1,6 +1,7 @@
 from flask_api import FlaskAPI, exceptions
 from flask import request
 import db
+import scraper
 
 app = FlaskAPI(__name__)
 
@@ -18,11 +19,14 @@ def parse():
             for i in data["urls"]:
                 if not isinstance(i, str):
                     raise exceptions.ParseError("One of your elements is not a string")
+                else:
+                    result = {}
+                    scraper.ProductPage(i, lambda url, html: scraper.scrape(result, url, html)).crawl()
     else:
         raise exceptions.ParseError("Enter list of urls")
 
     return {
-        'message': str(data)
+        'message': result
     }
 
 @app.route('/product', methods=['GET', 'PUT'])
