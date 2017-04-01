@@ -8,10 +8,10 @@ products = db['products']
 
 def add_one(request):
     product = products.insert_one(request)
-    return product.inserted_id
+    return product
 
-def get_one(request):
-    product = products.find_one(request)
+def get_one(id):
+    product = products.find_one({'_id': id})
     return product
 
 def remove_one(id):
