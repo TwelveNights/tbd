@@ -25,18 +25,14 @@ class SimpleScraper:
         return False
 
     def reject_duplicates(self, key, val, seen_list):
-        for entry in seen_list:
-            if key in entry or val in entry:
-                return True
-
-        return False
-
+        return any([key in entry or val in entry for entry in seen_list])
 
     def scrape(self, url):
         if url.startswith("https://") or url.startswith("http://"):
             pass
         else:
             url = "http://" + url
+
         session = dryscrape.Session()
         session.visit(url)
         response = session.body()
@@ -44,6 +40,7 @@ class SimpleScraper:
         soup = BeautifulSoup(response, 'html.parser')
         product_dict = {}
         try:
+
             product_dict['name'] = soup.find('h1').string
 
             lenovo_table = soup.find('table', class_="techSpecs-table")
@@ -67,13 +64,7 @@ class SimpleScraper:
 
                 key = tag.contents[0].string
                 val = tag.contents[1].prettify()
-                val_lines = val.split('\n')
-                stripped_val = []
-                for line in val_lines:
-                    if '<' not in line:
-                        stripped_val.append(line.strip())
-                val = " | "
-                val = val.join(stripped_val)
+                val = " | ".join([line.strip() for line in val.split('\n') if '<' not in line])
 
                 if key not in [None, "", 'null', 'Null', 'NULL', 'VOID', 'void', 'None', "none"]:
                     if not self.reject_duplicates(key, val, seen_tags):
