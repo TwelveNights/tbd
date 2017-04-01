@@ -1,8 +1,6 @@
 *.js.map
 node_modules
 .idea
-
-*.html
 env
 *.wt
 

@@ -1,8 +1,10 @@
 *.js.map
 node_modules
 .idea
+<<<<<<< HEAD
 
 *.html
+=======
 env
 *.wt
 
@@ -28,3 +30,4 @@ db/WiredTiger
 *.pyc
 
 .idea/vcs.xml
+>>>>>>> origin/master

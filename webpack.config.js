@@ -1,7 +1,7 @@
-let path = require('path')
+let path = require('path');
 
 module.exports = {
-    entry: "./web/src/index.js",
+    entry: "./web/index.js",
     output: {
         filename: "script.js",
         path: path.resolve(__dirname, "web", "dist", "public", "js")
@@ -25,5 +25,16 @@ module.exports = {
     externals: {
         "react": "React",
         "react-dom": "ReactDOM"
+    },
+
+    devServer: {
+        contentBase: path.join(__dirname, "web", "dist"),
+        publicPath: "/public/js/",
+        proxy: [
+            {
+                target: "http://localhost:5000",
+                pathRewrite: { "^/api/v1": "/" }
+            }
+        ]
     }
 }

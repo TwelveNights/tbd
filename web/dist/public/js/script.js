@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,20 +71,98 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__query_components_Query__ = __webpack_require__(3);
+/* harmony default export */ __webpack_exports__["a"] = {
+    parse: urls => {
+        return fetch("api/v1/parse", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ urls })
+        }).then(result => {
+            return result.json().then(res => {
+                return result.ok ? res : Promise.reject(res);
+            }).catch(res => {
+                return Promise.reject({ "message": "JSON is invalid" });
+            });
+        });
+    },
+
+    product: prod => {
+        return fetch("api/v1/product", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(prod)
+        });
+    }
+};
+
+/***/ }),
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_http__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__product_components_Product__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__query_components_Query__ = __webpack_require__(4);
+
+
 
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            err: "",
+            data: undefined
+        };
+
+        this.error = this.error.bind(this);
+        this.update = this.update.bind(this);
+    }
+
+    confirm(k) {
+        let product = this.data[k];
+
+        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].product(product); // TODO: handle messages
+    }
+
+    error(err) {
+        this.setState({ err });
+    }
+
+    update(data) {
+        this.setState({ data });
+    }
+
+    renderProducts() {
+        return this.state.data.map(d => {
+            return React.createElement(__WEBPACK_IMPORTED_MODULE_1__product_components_Product__["a" /* default */], { key: d.id, specs: d.specs, name: d.name, confirm: this.confirm.bind(this, k) });
+        });
+    }
+
     render() {
         return React.createElement(
-            "div",
-            { className: "container" },
+            'div',
+            { className: 'container mt-5' },
             React.createElement(
-                "h1",
-                { className: "text-center" },
-                "Parser"
+                'h1',
+                { className: 'text-center' },
+                'Product Parser'
             ),
-            React.createElement(__WEBPACK_IMPORTED_MODULE_0__query_components_Query__["a" /* default */], null)
+            this.state.err ? React.createElement(
+                'div',
+                { className: 'alert alert-danger', role: 'alert' },
+                this.state.err,
+                '.'
+            ) : null,
+            React.createElement(__WEBPACK_IMPORTED_MODULE_2__query_components_Query__["a" /* default */], { update: this.update, error: this.error }),
+            this.state.data ? null : null
         );
     }
 }
@@ -92,34 +170,72 @@ class App extends React.Component {
 
 
 /***/ }),
-/* 1 */
+/* 2 */
 /***/ (function(module, exports) {
 
 module.exports = ReactDOM;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony default export */ __webpack_exports__["a"] = {
-    get: () => {
-        fetch("/query", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.parse({})
-        }).then(result => result.json());
-    }
-};
 
 /***/ }),
 /* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_http__ = __webpack_require__(2);
+class Product extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            name: "",
+            specs: []
+        };
+
+        this.handleConfirm = this.handleConfirm.bind(this);
+    }
+
+    update(k, e) {
+        let newSpecs = this.state.specs;
+        newSpecs[k].value = e.currentTarget.value;
+
+        this.setState({ specs: newSpecs });
+    }
+
+    renderSpecs() {
+        return this.props.specs.map((spec, k) => {
+            return React.createElement(Specification, { key: k, update: this.update.bind(this, k), data: spec });
+        });
+    }
+
+    render() {
+        return React.createElement(
+            "div",
+            null,
+            React.createElement(
+                "h2",
+                { className: "text-center" },
+                this.props.name
+            ),
+            React.createElement(
+                "form",
+                null,
+                this.renderSpecs(),
+                React.createElement(
+                    "button",
+                    { className: "btn btn-primary text-center", onClick: this.props.confirm },
+                    "Confirm"
+                )
+            )
+        );
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Product;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_http__ = __webpack_require__(0);
 
 
 class Query extends React.Component {
@@ -129,6 +245,9 @@ class Query extends React.Component {
         this.state = {
             url: ""
         };
+
+        this.onChangeUrl = this.onChangeUrl.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChangeUrl(e) {
@@ -137,7 +256,13 @@ class Query extends React.Component {
     }
 
     onSubmit(e) {
-        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get();
+        e.preventDefault();
+        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].post([{ url: this.state.url }]).then(res => {
+            this.props.error("");
+            this.props.update(res);
+        }).catch(res => {
+            this.props.error(res.message);
+        });
     }
 
     render() {
@@ -163,7 +288,7 @@ class Query extends React.Component {
                 { className: "form-group text-center" },
                 React.createElement(
                     "button",
-                    { className: "btn btn-primary" },
+                    { type: "submit", onClick: this.onSubmit, className: "btn btn-primary" },
                     "Submit"
                 )
             )
@@ -174,13 +299,13 @@ class Query extends React.Component {
 
 
 /***/ }),
-/* 4 */
+/* 5 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__App__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_react_dom___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_react_dom__);
 
 
