@@ -34,8 +34,7 @@ def parse():
 @app.route('/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def do_something_with_product():
     if request.method == "GET":
-        data = get_all({})
-        return [datum for datum in data]
+        return get_all()
     elif request.method == "POST":
         return add_one(request.data)
     elif request.method == "PUT":
@@ -44,11 +43,11 @@ def do_something_with_product():
             item_id = data["_id"]
             del data["_id"]
             return update(item_id, data)
-        return exceptions.APIException("Bad request")
+        raise exceptions.ParseError("Bad request")
     elif request.method == "DELETE":
-        data = request.data
-        item_id = data["_id"]
-        return db.remove_one(item_id)
+        if "id" not in request.data:
+            raise exceptions.ParseError("No id to delete!")
+        return remove_one(request.data["id"])
 
 
 """

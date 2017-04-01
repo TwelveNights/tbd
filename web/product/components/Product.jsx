@@ -16,6 +16,7 @@ export default class Product extends React.Component {
     addSpec(e) {
         e.preventDefault();
         this.props.addSpec(this.state.newSpec);
+        this.setState({ newSpec: "" });
     }
 
     modifyNewSpec(e) {

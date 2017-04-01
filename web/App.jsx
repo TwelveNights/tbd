@@ -8,19 +8,25 @@ export default class App extends React.Component {
 
         this.state = {
             err: "",
+            view: ProductContainer
         };
 
         this.error = this.error.bind(this);
+        this.changeView = this.changeView.bind(this);
     }
 
     error(err) {
         this.setState({ err });
     }
 
+    changeView(view) {
+        this.setState({ view });
+    }
+
     render() {
         return (
             <div>
-                <NavBar />
+                <NavBar changeView={ this.changeView } />
                 <div className="container mt-5">
                     <h1 className="text-center">Product Parser</h1>
                     { this.state.err ?
@@ -28,7 +34,7 @@ export default class App extends React.Component {
                             { this.state.err }.
                         </div> : null
                     }
-                    <ProductContainer error={ this.error } />
+                    <this.state.view error={ this.error } />
                 </div>
             </div>
         );

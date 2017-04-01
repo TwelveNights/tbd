@@ -19,7 +19,9 @@ export default class ProductContainer extends React.Component {
 
     confirm(k) {
         let product = this.state.products[k];
-        http.post("/product", product);
+        http.post("/products", product).then((result) => {
+            this.setState({ products: [] });
+        });
     }
 
     addSpec(i, value) {

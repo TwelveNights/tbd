@@ -7,17 +7,15 @@ products = db['products']
 
 
 def add_one(request):
-
     result = products.insert_one(request)
     item_id = result.inserted_id
-    product = products.find_one({'_id': item_id})
+    product = products.find_one({'_id': item_id })
+    product["_id"] = str(product["_id"])
     return product
-
 
 def get_one(id):
     product = find_instance(id)
     return product
-
 
 def remove_one(id):
     item = find_instance(id)
@@ -25,10 +23,10 @@ def remove_one(id):
     if item is not None:
         objid = item['_id']
         deleted_item = products.find_one_and_delete({'_id': objid})
+        deleted_item["_id"] = str(deleted_item["_id"])
         return deleted_item
 
     return None
-
 
 def remove_all(request):
     products.delete_many(request)
@@ -38,10 +36,15 @@ def add_all(products):
     products.insert_many(products)
 
 
-def get_all(request):
-    cursor = products.find(request)
-    return cursor
+def get_all():
+    cursor = products.find()
 
+    result = []
+    for obj in cursor:
+        obj["_id"] = str(obj["_id"])
+        result.append(obj)
+
+    return result
 
 def update(id, request):
     item = find_instance(id)
