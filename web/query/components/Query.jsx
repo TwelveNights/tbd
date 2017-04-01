@@ -19,7 +19,7 @@ export default class Query extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        http.parse([this.state.url])
+        http.post("/parse", { urls: [this.state.url] })
             .then((res) => {
                 this.props.error("");
                 this.props.update(res.data);
@@ -35,6 +35,7 @@ export default class Query extends React.Component {
                 <div className="form-group">
                     <label htmlFor="url">Enter a url:</label>
                     <input
+                        id="url"
                         className="form-control"
                         value={ this.state.url }
                         onChange={ this.onChangeUrl }

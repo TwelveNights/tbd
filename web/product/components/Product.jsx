@@ -1,24 +1,17 @@
 import Specification from './Specification';
 
 export default class Product extends React.Component {
-    constructor(props) {
-        super(props);
-
-        // this.state = {
-        //     specs: []
-        // };
+    changeSpec(k, e) {
+        this.props.changeSpec(k, e);
     }
 
-    // update(k, e) {
-    //     let newSpecs = this.state.specs;
-    //     newSpecs[k].value = e.currentTarget.value;
-
-    //     this.setState({ specs: newSpecs });
-    // }
+    removeSpec(k) {
+        this.props.removeSpec(k);
+    }
 
     renderSpecs() {
         return this.props.product.specifications.map((spec, k) => {
-            return <Specification key={ k } data={ spec } />
+            return <Specification changeSpec={ this.changeSpec.bind(this, k) } removeSpec={ this.removeSpec.bind(this, k) } key={ k } data={ spec } />
         });
     }
 

@@ -1,11 +1,12 @@
+const API_URL = "/api/v1";
+
 export default {
-    parse: (urls) => {
-        return fetch("api/v1/parse", {
-            method: "POST",
+    get: (url) => {
+        return fetch(API_URL + url, {
+            method: "GET",
             headers: {
                 "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ urls })
+            }
         }).then((result) => {
             return result.json()
                 .then((res) => {
@@ -16,18 +17,57 @@ export default {
         });
     },
 
-    getProducts: () => {
-        return fetch("api/v1/product");
+    put: (url, data) => {
+        return fetch(API_URL + url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(data)
+        }).then((result) => {
+            return result.json()
+                .then((res) => {
+                    return result.ok ? res : Promise.reject(res);
+                }).catch((res) => {
+                    return Promise.reject(res);
+                });
+        });
     },
 
-    updateProduct: (prod) => {
-        return fetch("api/v1/product", {
+    post: (url, data) => {
+        return fetch(API_URL + url, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
 
-            body: JSON.stringify(prod)
+            body: JSON.stringify(data)
+        }).then((result) => {
+            return result.json()
+                .then((res) => {
+                    return result.ok ? res : Promise.reject(res);
+                }).catch((res) => {
+                    return Promise.reject(res);
+                });
+        });
+    },
+
+    delete: (url, data) => {
+        return fetch(API_URL + url, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(data)
+        }).then((result) => {
+            return result.json()
+                .then((res) => {
+                    return result.ok ? res : Promise.reject(res);
+                }).catch((res) => {
+                    return Promise.reject(res);
+                });
         });
     }
 }

@@ -19,7 +19,25 @@ export default class ProductContainer extends React.Component {
 
     confirm(k) {
         let product = this.state.products[k];
-        http.product(product); // TODO: handle messages
+        http.post("/product", product);
+    }
+
+    removeSpec(i, k) {
+        let product = this.state.products[i];
+        product.specifications.splice(k, 1)
+        if (product.specifications.length == 0) {
+            this.state.products.splice(i, 1);
+        }
+
+        this.setState({ products: this.state.products });
+    }
+
+    changeSpec(i, k, e) {
+        let product = this.state.products[i];
+        let key = Object.keys(product.specifications[k])[0];
+        product.specifications[k][key] = e.currentTarget.value;
+
+        this.setState({ products: this.state.products });
     }
 
     renderProducts() {
@@ -27,6 +45,8 @@ export default class ProductContainer extends React.Component {
             return <Product
                 key={ k }
                 product={ d }
+                changeSpec={ this.changeSpec.bind(this, k) }
+                removeSpec={ this.removeSpec.bind(this, k) }
                 confirm={ this.confirm.bind(this, k) }/>
         });
     }
