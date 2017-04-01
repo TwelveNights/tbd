@@ -11,7 +11,6 @@ def add_one(request):
     result = products.insert_one(request)
     item_id = result.inserted_id
     product = products.find_one({'_id': item_id})
-    product['_id'] = product['_id'].toString()
     return product
 
 
