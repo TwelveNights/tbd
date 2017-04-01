@@ -21,7 +21,7 @@ def scrape(result, url, html):
         tds = tr.find_all('td')
         key = tds[0].span.string
         val = tds[1].span.string
-        features_list.append((key, val))
+        features_list.append({key: val})
 
     product_dict['specifications'] = features_list
 

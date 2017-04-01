@@ -17,7 +17,7 @@ export default class Product extends React.Component {
     // }
 
     renderSpecs() {
-        return this.props.specs.map((spec, k) => {
+        return this.props.product.specifications.map((spec, k) => {
             return <Specification key={ k } data={ spec } />
         });
     }
@@ -25,7 +25,7 @@ export default class Product extends React.Component {
     render() {
         return (
             <div>
-                <h2 className="text-center">{ this.props.name }</h2>
+                <h2 className="text-center">{ this.props.product.name }</h2>
                 <form>
                     { this.renderSpecs() }
                     <button className="btn btn-primary text-center" onClick={ this.props.confirm }>Confirm</button>

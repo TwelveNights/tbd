@@ -24,12 +24,13 @@ export default class ProductContainer extends React.Component {
     }
 
     confirm(k) {
-        let product = this.data[k];
+        let product = this.state.products[k];
         http.product(product); // TODO: handle messages
     }
 
     renderProducts() {
-        return this.state.data.map((d) => {
+        console.log(this.state.products);
+        return this.state.products.map((d) => {
             return <Product
                 key={ d.id }
                 product={ d }
@@ -41,7 +42,7 @@ export default class ProductContainer extends React.Component {
         return (
             <div>
                 <Query update={ this.update } error={ this.props.error } />
-                { this.state.data ? this.renderProducts() : null }
+                { this.state.products ? this.renderProducts() : null }
             </div>
         );
     }

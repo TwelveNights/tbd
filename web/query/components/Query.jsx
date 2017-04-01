@@ -22,7 +22,7 @@ export default class Query extends React.Component {
         http.parse([this.state.url])
             .then((res) => {
                 this.props.error("");
-                this.props.update(res);
+                this.props.update(res.data);
             })
             .catch((res) => {
                 this.props.error(res.message);
