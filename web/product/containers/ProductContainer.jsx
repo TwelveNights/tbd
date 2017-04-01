@@ -9,12 +9,18 @@ export default class ProductContainer extends React.Component {
         this.state = {
             products: []
         };
+
+        this.update = this.update.bind(this);
     }
 
     componentDidMount() {
         http.getProducts().then((products) => {
             this.setState({ products });
         });
+    }
+
+    update(products) {
+        this.setState({ products });
     }
 
     confirm(k) {

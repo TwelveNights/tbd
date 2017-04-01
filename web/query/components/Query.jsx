@@ -19,7 +19,7 @@ export default class Query extends React.Component {
     onSubmit(e) {
         e.preventDefault();
 
-        http.parse([{ url: this.state.url }])
+        http.parse([this.state.url])
             .then((res) => {
                 this.props.error("");
                 this.props.update(res);

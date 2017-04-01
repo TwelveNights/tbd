@@ -11,7 +11,7 @@ export default {
                 .then((res) => {
                     return result.ok ? res : Promise.reject(res);
                 }).catch((res) => {
-                    return Promise.reject({ "message": "JSON is invalid" });
+                    return Promise.reject(res);
                 });
         });
     },
