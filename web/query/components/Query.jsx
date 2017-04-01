@@ -27,6 +27,7 @@ export default class Query extends React.Component {
                 this.props.update(res.data);
             })
             .catch((res) => {
+                this.props.success("");
                 this.props.error(res.message);
             });
     }
