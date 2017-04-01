@@ -4,12 +4,12 @@ module.exports = {
     entry: "./web/src/index.js",
     output: {
         filename: "script.js",
-        path: path.resolve(__dirname, "web", "dist", "js")
+        path: path.resolve(__dirname, "web", "dist", "public", "js")
     },
 
     devtool: "source-map",
     resolve: {
-        extensions: [".js", ".min.js", ".jsx", ".css", ".min.css"]
+        extensions: [".js", ".jsx"]
     },
 
     module: {

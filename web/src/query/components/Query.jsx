@@ -22,13 +22,15 @@ export default class Query extends React.Component {
         return (
             <form>
                 <div className="form-group">
+                    <label htmlFor="url">Enter a url:</label>
                     <input
                         className="form-control"
                         value={ this.state.url }
-                        onChange={ this.onChangeUrl } />
+                        onChange={ this.onChangeUrl } 
+                        placeholder="URL" />
                 </div>
-                <div className="form-group">
-                    <button className="btn btn-primary center-text">Submit</button>
+                <div className="form-group text-center">
+                    <button className="btn btn-primary">Submit</button>
                 </div>
             </form>
         )

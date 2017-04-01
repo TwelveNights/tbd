@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -71,9 +71,21 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__query_components_Query__ = __webpack_require__(3);
+
+
 class App extends React.Component {
     render() {
-        return React.createElement("div", null);
+        return React.createElement(
+            "div",
+            { className: "container" },
+            React.createElement(
+                "h1",
+                { className: "text-center" },
+                "Parser"
+            ),
+            React.createElement(__WEBPACK_IMPORTED_MODULE_0__query_components_Query__["a" /* default */], null)
+        );
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = App;
@@ -87,6 +99,82 @@ module.exports = ReactDOM;
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = {
+    get: () => {
+        fetch("/query", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.parse({})
+        }).then(result => result.json());
+    }
+};
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__common_http__ = __webpack_require__(2);
+
+
+class Query extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            url: ""
+        };
+    }
+
+    onChangeUrl(e) {
+        let url = e.currentTarget.value;
+        this.setState({ url });
+    }
+
+    onSubmit(e) {
+        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get();
+    }
+
+    render() {
+        return React.createElement(
+            "form",
+            null,
+            React.createElement(
+                "div",
+                { className: "form-group" },
+                React.createElement(
+                    "label",
+                    { htmlFor: "url" },
+                    "Enter a url:"
+                ),
+                React.createElement("input", {
+                    className: "form-control",
+                    value: this.state.url,
+                    onChange: this.onChangeUrl,
+                    placeholder: "URL" })
+            ),
+            React.createElement(
+                "div",
+                { className: "form-group text-center" },
+                React.createElement(
+                    "button",
+                    { className: "btn btn-primary" },
+                    "Submit"
+                )
+            )
+        );
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = Query;
+
+
+/***/ }),
+/* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
