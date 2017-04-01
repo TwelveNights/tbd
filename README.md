@@ -1,7 +1,16 @@
 # tbd
 BizHacks 2017
 
-hello world
+## Description
+An application used to conveniently parsing product details from a webpage.
+
+## Dependencies
++ `node`
+++ `npm i` for front-end build tools
++ `python3.6`
+++ `python-qt4`
+++ `pip install -r requirements.txt` for back-end
++ `mongo`
 
 ## Product Description
 ```
