@@ -3,10 +3,12 @@ from .product import *
 
 def parse(obj):
 
-    productDetail = ProductDetail('product_name')
-    spec1 = Specification('spec1', 'This is a awesome spec for the object')
-    productDetail.add_spec(spec1)
+    product_detail = ProductDetail(obj['name'])
 
-    product = add_one(productDetail)
+    for item in obj['spces']:
+        spec = Specification(item['name'], item['value'])
+        product_detail.add_spec(spec)
+
+    product = add_one(product_detail.to_dict())
 
     return product
