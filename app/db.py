@@ -30,4 +30,4 @@ def get_all(request):
     return cursor
 
 def update(id, request):
-    return products.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER)
+    products.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER)
