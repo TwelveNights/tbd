@@ -1,0 +1,30 @@
+{
+  "name": "bizhacks",
+  "version": "1.0.0",
+  "description": "BizHacks 2017",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-react": "^6.23.0"
+  },
+  "babel": {
+    "presets": [
+      "react"
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TwelveNights/tbd.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TwelveNights/tbd/issues"
+  },
+  "homepage": "https://github.com/TwelveNights/tbd#readme"
+}
