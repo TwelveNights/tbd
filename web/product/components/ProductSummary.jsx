@@ -37,8 +37,11 @@ export default class ProductSummary extends React.Component {
 
     render() {
         return (
-            <div id="accordion" role="tablist" aria-multiselectable="true">
-                { this.renderProducts() }
+            <div className="text-center">
+                <button className="btn btn-success">Push to BestBuy</button>
+                <div id="accordion" role="tablist" aria-multiselectable="true">
+                    { this.renderProducts() }
+                </div>
             </div>
         )
     }

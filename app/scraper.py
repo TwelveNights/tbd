@@ -7,7 +7,12 @@ class SimpleScraper:
         pass
 
     def scrape(self, url):
-        url = "http://" + url.strip("http://")
+        if url.startswith("https://"):
+            raise exceptions.ParseError("Cannot accept https requests")
+        elif url.startswith("http://"):
+            pass
+        else:
+            url = "http://" + url
         session = dryscrape.Session()
         session.visit(url)
         response = session.body()
