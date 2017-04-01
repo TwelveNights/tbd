@@ -1,8 +1,9 @@
 from flask_api import FlaskAPI, exceptions
 from flask import request
-import db
+from app.db import *
 
 app = FlaskAPI(__name__)
+
 
 @app.route('/parse', methods=['GET', 'POST'])
 def parse():
@@ -26,11 +27,22 @@ def parse():
     }
 
 
-@app.route('/product', methods=['GET', 'PUT'])
-def get_collection():
+@app.route('/products', methods=['GET', 'POST', 'PUT'])
+def do_something_with_product():
     if request.method == "GET":
-        data = db.get_all({})
+        data = get_all({})
         return [datum for datum in data]
+    elif request.method == "POST":
+        return add_one(request.data)
+    elif request.method == "PUT":
+        if request is not None:
+            data = request.data
+            added = add_one(data)
+            item_id = added.inserted_id
+
+            return update(item_id, data)
+        return exceptions.APIException("Bad request")
+
 
 
 
@@ -38,7 +50,8 @@ def get_collection():
 """
 { "urls" : ["cs.ubc.ca", "google.com"] }
 {"urls" : []}
-
+{ "name" : "umbreon", "specifications" : "dark" }
+{ "name" : "espeon", "specifications" : "light" }
 """
 
 if __name__ == '__main__':
