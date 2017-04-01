@@ -1,11 +1,9 @@
 import json
-import sys
 from bs4 import BeautifulSoup, SoupStrainer
+from page_renderer import PageRenderer
 
-from pageRenderer import PageRenderer
 
-
-class ProductPage(object):
+class ProductPage:
     def __init__(self, url, cb):
         self.url = url
         self.html = None
@@ -36,13 +34,5 @@ class ProductPage(object):
 
         return json.dumps(self.product_dict, indent=4)
 
-
-
-
-
 def cb(url, html):
     print('Got {0} bytes of HTML'.format(len(html)))
-
-if __name__ == '__main__':
-    plp = ProductPage(sys.argv[1], cb)
-    plp.scrape()

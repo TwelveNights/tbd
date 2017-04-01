@@ -25,21 +25,11 @@ def parse():
         'message': str(data)
     }
 
-
 @app.route('/product', methods=['GET', 'PUT'])
 def get_collection():
     if request.method == "GET":
         data = db.get_all({})
         return [datum for datum in data]
-
-
-
-
-"""
-{ "urls" : ["cs.ubc.ca", "google.com"] }
-{"urls" : []}
-
-"""
 
 if __name__ == '__main__':
     app.run(debug=True)
