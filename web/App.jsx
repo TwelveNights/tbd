@@ -5,7 +5,6 @@ export default class App extends React.Component {
     constructor(props) {
         super(props);
 
-        // TODO: define data usage
         this.state = {
             err: "",
         };
