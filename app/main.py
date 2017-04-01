@@ -1,6 +1,6 @@
 from flask_api import FlaskAPI, exceptions
 from flask import request
-from app.db import *
+from db import *
 import scraper
 
 app = FlaskAPI(__name__)

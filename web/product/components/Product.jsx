@@ -28,7 +28,9 @@ export default class Product extends React.Component {
                 <h2 className="text-center">{ this.props.product.name }</h2>
                 <form>
                     { this.renderSpecs() }
-                    <button className="btn btn-primary text-center" onClick={ this.props.confirm }>Confirm</button>
+                    <div className="form-group text-center">
+                        <button className="btn btn-primary" onClick={ this.props.confirm }>Confirm</button>
+                    </div>
                 </form>
             </div>
         );

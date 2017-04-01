@@ -13,12 +13,6 @@ export default class ProductContainer extends React.Component {
         this.update = this.update.bind(this);
     }
 
-    componentDidMount() {
-        http.getProducts().then((products) => {
-            this.setState({ products });
-        });
-    }
-
     update(products) {
         this.setState({ products });
     }
@@ -29,10 +23,9 @@ export default class ProductContainer extends React.Component {
     }
 
     renderProducts() {
-        console.log(this.state.products);
-        return this.state.products.map((d) => {
+        return this.state.products.map((d, k) => {
             return <Product
-                key={ d.id }
+                key={ k }
                 product={ d }
                 confirm={ this.confirm.bind(this, k) }/>
         });

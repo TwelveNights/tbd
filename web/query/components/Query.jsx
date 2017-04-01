@@ -41,7 +41,7 @@ export default class Query extends React.Component {
                         placeholder="URL" />
                 </div>
                 <div className="form-group text-center">
-                    <button type="submit" onClick={ this.onSubmit } className="btn btn-primary">Submit</button>
+                    <button type="submit" disabled={ !this.state.url } onClick={ this.onSubmit } className="btn btn-primary">Submit</button>
                 </div>
             </form>
         )
