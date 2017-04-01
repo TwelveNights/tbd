@@ -49,9 +49,8 @@ def adaptor():
             spec['definition'] = ''
             specs.append(spec)
 
-        product['specifications'] = specs
+        product['overview']['specifications'] = specs
 
         products.append(product)
 
-    print(str(products))
     return products
