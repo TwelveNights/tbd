@@ -8,11 +8,17 @@ export default class App extends React.Component {
 
         this.state = {
             err: "",
+            msg: "",
             view: ProductContainer
         };
 
+        this.success = this.success.bind(this);
         this.error = this.error.bind(this);
         this.changeView = this.changeView.bind(this);
+    }
+
+    success(msg) {
+        this.setState({ msg });
     }
 
     error(err) {
@@ -20,8 +26,7 @@ export default class App extends React.Component {
     }
 
     changeView(view) {
-        this.setState({ err: "" });
-        this.setState({ view });
+        this.setState({ view, err: "", msg: "" });
     }
 
     render() {
@@ -35,7 +40,12 @@ export default class App extends React.Component {
                             { this.state.err }.
                         </div> : null
                     }
-                    <this.state.view error={ this.error } />
+                    { this.state.msg ?
+                        <div className="alert alert-success" role="alert">
+                            { this.state.msg }.
+                        </div> : null
+                    }
+                    <this.state.view success={ this.success } error={ this.error } />
                 </div>
             </div>
         );

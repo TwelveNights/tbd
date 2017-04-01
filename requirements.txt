@@ -3,3 +3,4 @@ Flask-API
 beautifulsoup4
 pymongo
 dryscrape
+requests

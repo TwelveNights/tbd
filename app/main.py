@@ -2,6 +2,8 @@ from flask_api import FlaskAPI, exceptions, status
 from flask import request
 from db import *
 from scraper import SimpleScraper
+import requests
+import adapter
 
 app = FlaskAPI(__name__)
 
@@ -58,6 +60,12 @@ def do_something_with_product():
 
         return remove_one(request.data["id"])
 
+@app.route('/adapter', methods=['POST'])
+def send_to_bestbuy():
+    data = {"data": adapter.adapter(request.data)}
+    print(data)
+    requests.post("http://bestbuy.ca", data=data)
+    return {}, status.HTTP_204_NO_CONTENT
 
 """
 { "urls" : ["cs.ubc.ca", "google.com"] }
