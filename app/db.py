@@ -1,6 +1,5 @@
 import pymongo as pm
 from pymongo import ReturnDocument
-from pprint import pprint
 
 client = pm.MongoClient()
 db = client['product_db']
@@ -15,7 +14,7 @@ def get_one(id):
     return product
 
 def remove_one(id):
-    products.delete_one(id)
+    products.find_one_and_delete({'_id': id})
 
 def remove_all(request):
     products.delete_many(request)
@@ -28,4 +27,4 @@ def get_all(request):
     return cursor
 
 def update(id, request):
-    pprint(products.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER))
+    products.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER)
