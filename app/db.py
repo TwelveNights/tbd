@@ -4,29 +4,28 @@ from pprint import pprint
 
 client = pm.MongoClient()
 db = client['product_db']
-appleProducts = db['apple']
+products = db['products']
 
 def add_one(request):
-    product = appleProducts.insert_one(request)
+    product = products.insert_one(request)
     return product.inserted_id
 
 def get_one(request):
-    product = appleProducts.find_one(request)
-    pprint(product)
+    product = products.find_one(request)
+    return product
 
 def remove_one(id):
-    appleProducts.delete_one(id)
+    products.delete_one(id)
 
 def remove_all(request):
-    appleProducts.delete_many(request)
+    products.delete_many(request)
 
 def add_all(products):
-    appleProducts.insert_many(products)
+    products.insert_many(products)
 
 def get_all(request):
-    products = appleProducts.find(request)
-    for product in products:
-        pprint(product)
+    cursor = products.find(request)
+    return cursor
 
 def update(id, request):
-    pprint(appleProducts.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER))
+    pprint(products.find_one_and_replace({'_id': id}, request, return_document=ReturnDocument.AFTER))
