@@ -22,6 +22,7 @@ export default class Query extends React.Component {
         http.post("/parse", { urls: [this.state.url] })
             .then((res) => {
                 this.setState({ url: "" });
+                this.props.success("Successfully parsed!");
                 this.props.error("");
                 this.props.update(res.data);
             })

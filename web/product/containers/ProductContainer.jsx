@@ -21,6 +21,7 @@ export default class ProductContainer extends React.Component {
         let product = this.state.products[k];
         http.post("/products", product).then((result) => {
             this.setState({ products: [] });
+            this.props.success("Succesfully queued new object to be pushed");
         });
     }
 
@@ -64,7 +65,7 @@ export default class ProductContainer extends React.Component {
     render() {
         return (
             <div>
-                <Query update={ this.update } error={ this.props.error } />
+                <Query update={ this.update } success={ this.props.success } error={ this.props.error } />
                 { this.state.products ? this.renderProducts() : null }
             </div>
         );
