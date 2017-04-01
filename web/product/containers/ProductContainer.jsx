@@ -22,6 +22,13 @@ export default class ProductContainer extends React.Component {
         http.post("/product", product);
     }
 
+    addSpec(i, value) {
+        let obj = {}
+        obj[value] = ""
+        this.state.products[i].specifications.push(obj);
+        this.setState({ products: this.state.products });
+    }
+
     removeSpec(i, k) {
         let product = this.state.products[i];
         product.specifications.splice(k, 1)
@@ -45,6 +52,7 @@ export default class ProductContainer extends React.Component {
             return <Product
                 key={ k }
                 product={ d }
+                addSpec={ this.addSpec.bind(this, k) }
                 changeSpec={ this.changeSpec.bind(this, k) }
                 removeSpec={ this.removeSpec.bind(this, k) }
                 confirm={ this.confirm.bind(this, k) }/>
