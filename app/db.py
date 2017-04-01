@@ -9,6 +9,7 @@ def add_one(request):
     result = products.insert_one(request)
     item_id = result.inserted_id
     product = products.find_one({'_id': item_id})
+    product['_id'] = str(product['_id'])
     return product
 
 def get_one(id):

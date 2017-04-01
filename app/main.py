@@ -16,17 +16,19 @@ def parse():
         if len(data["urls"]) == 0:
             raise exceptions.ParseError("No element in the list")
         else:
+            response = []
             for i in data["urls"]:
                 if not isinstance(i, str):
                     raise exceptions.ParseError("One of your elements is not a string")
                 else:
                     result = {}
                     scraper.ProductPage(i, lambda url, html: scraper.scrape(result, url, html)).crawl()
+                    response.append(result["data"])
     else:
         raise exceptions.ParseError("Enter list of urls")
 
     return {
-        'message': result
+        'data': response
     }
 
 @app.route('/products', methods=['GET', 'POST', 'PUT', 'DELETE'])
