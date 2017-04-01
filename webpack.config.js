@@ -30,11 +30,11 @@ module.exports = {
     devServer: {
         contentBase: path.join(__dirname, "web", "dist"),
         publicPath: "/public/js/",
-        proxy: [
-            {
+        proxy: {
+            '/api/v1': {
                 target: "http://localhost:5000",
                 pathRewrite: { "^/api/v1": "/" }
             }
-        ]
+        }
     }
 }
