@@ -75,6 +75,21 @@
 
 
 class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            err: ""
+        };
+
+        this.error = this.error.bind(this);
+    }
+
+    error(err) {
+        this.setState({ err });
+    }
+
     render() {
         return React.createElement(
             "div",
@@ -84,7 +99,13 @@ class App extends React.Component {
                 { className: "text-center" },
                 "Product Parser"
             ),
-            React.createElement(__WEBPACK_IMPORTED_MODULE_0__query_components_Query__["a" /* default */], null)
+            this.state.err ? React.createElement(
+                "div",
+                { className: "alert alert-danger", role: "alert" },
+                this.state.err,
+                "."
+            ) : null,
+            React.createElement(__WEBPACK_IMPORTED_MODULE_0__query_components_Query__["a" /* default */], { error: this.error })
         );
     }
 }
@@ -104,13 +125,19 @@ module.exports = ReactDOM;
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = {
     get: urls => {
-        fetch("api/v1/parse", {
+        return fetch("api/v1/parse", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({ urls })
-        }).then(result => result.json());
+        }).then(result => {
+            return result.json().then(res => {
+                return result.ok ? res : Promise.reject(res);
+            }).catch(res => {
+                return Promise.reject({ "message": "JSON is invalid" });
+            });
+        });
     }
 };
 
@@ -141,7 +168,11 @@ class Query extends React.Component {
 
     onSubmit(e) {
         e.preventDefault();
-        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get([{ url: this.state.url }]);
+        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get([{ url: this.state.url }]).then(res => {
+            this.props.error("");
+        }).catch(res => {
+            this.props.error(res.message);
+        });
     }
 
     render() {

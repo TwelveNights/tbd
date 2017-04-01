@@ -1,10 +1,10 @@
 let path = require('path');
 
 module.exports = {
-    entry: "./web/src/index.js",
+    entry: "./web/index.js",
     output: {
         filename: "script.js",
-        path: path.resolve(__dirname, "web", "dist")
+        path: path.resolve(__dirname, "web", "dist", "public", "js")
     },
 
     devtool: "source-map",
