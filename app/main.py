@@ -1,5 +1,6 @@
 from flask_api import FlaskAPI, exceptions
 from flask import request
+import db
 
 app = FlaskAPI(__name__)
 
@@ -23,6 +24,15 @@ def parse():
     return {
         'message': str(data)
     }
+
+
+@app.route('/product', methods=['GET', 'PUT'])
+def get_collection():
+    if request.method == "GET":
+        data = db.get_all({})
+        return [datum for datum in data]
+
+
 
 
 """

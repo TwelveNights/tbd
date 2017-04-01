@@ -16,6 +16,8 @@ env
 
 *.turtle
 
+db/*
+
 db/WiredTiger
 
 *.bson
