@@ -1,12 +1,12 @@
 from flask.ext.api import FlaskAPI, exceptions
 from flask import request
+from app.db import *
 
 app = FlaskAPI(__name__)
 
-@app.route('/parse/', methods=['GET', 'POST'])
+@app.route('/parse', methods=['GET', 'POST'])
 def parse():
     data = request.data
-
     if "urls" not in data:
         raise exceptions.APIException("'urls' key is missing")
 
@@ -28,7 +28,18 @@ def parse():
         'message': str("Hello")
     }
 
+@app.route('/products', methods=['GET', 'DELETE'])
+def get_collection():
+    if request.method == "GET":
+        data = db.get_all({})
+        return [datum for datum in data]
 
+    if request.method == "DELETE":
+        temp = db.get_all({})
+        data = [datum for datum in temp]
+        for i in data:
+            if i.get(['_id']) == id:
+                return db.remove_one(id)
 """
 { "urls" : ["cs.ubc.ca", "google.com"] }
 {"urls" : []}
