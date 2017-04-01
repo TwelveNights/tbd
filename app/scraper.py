@@ -24,6 +24,14 @@ class SimpleScraper:
                     return True
         return False
 
+    def reject_duplicates(self, key, val, seen_list):
+        for entry in seen_list:
+            if key in entry or val in entry:
+                return True
+
+        return False
+
+
     def scrape(self, url):
         if url.startswith("https://") or url.startswith("http://"):
             pass
@@ -43,8 +51,6 @@ class SimpleScraper:
 
             features = []
             seen_tags = []
-            seen_keys = []
-            seen_vals = []
             for tag in sku_table.descendants:
                 if not tag or tag in seen_tags:
                     continue
@@ -54,34 +60,24 @@ class SimpleScraper:
                 seen_tags.append(tag)
                 if tag.descendents:
                     seen_tags += tag.descendentss
-                    # for child_tag in tag.descendents:
-                    #     seen_tags.append(child_tag)
 
                 key = tag.contents[0].string
-                val = tag.contents[1]
+                val = tag.contents[1].prettify()
+                val_lines = val.split('\n')
+                stripped_val = []
+                for line in val_lines:
+                    if '<' not in line:
+                        stripped_val.append(line.strip())
+                val = " | "
+                val = val.join(stripped_val)
 
-                if len(val.contents) > 1:
-                    val_contents = []
-                    for subkey in val.contents:
-                        val_contents.append(subkey.string)
-                    val = val_contents
-                else:
-                    val = val.string
                 if key not in [None, "", 'null', 'Null', 'NULL', 'VOID', 'void', 'None', "none"]:
-                    if (val not in seen_vals) and (val not in seen_keys) \
-                            and (key not in seen_vals) and (key not in seen_keys):
-                        seen_keys.append(key)
-                        seen_vals.append(val)
-                        print("appending ", key, val)
+                    if not self.reject_duplicates(key, val, seen_tags):
+                        seen_tags.append(val)
+                        seen_tags.append(key)
+                        print("appending ", key, ": ", val)
                         features.append({key: val})
 
-            # trs = sku_table.find_all('tr')
-            # if trs:
-            #     for tr in trs:
-            #         tds = tr.find_all('td')
-            #         key = tds[0].span.string
-            #         val = tds[1].span.string
-            #         features.append({key: val})
 
             product_dict['specifications'] = features
 
