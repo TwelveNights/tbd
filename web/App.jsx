@@ -20,6 +20,7 @@ export default class App extends React.Component {
     }
 
     changeView(view) {
+        this.setState({ err: "" });
         this.setState({ view });
     }
 
