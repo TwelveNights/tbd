@@ -37,9 +37,8 @@ def do_something_with_product():
     elif request.method == "PUT":
         if request is not None:
             data = request.data
-            added = add_one(data)
-            item_id = added.inserted_id
-
+            item_id = data["_id"]
+            del data["_id"]
             return update(item_id, data)
         return exceptions.APIException("Bad request")
 
