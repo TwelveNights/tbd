@@ -22,6 +22,9 @@ def parse():
                 if not isinstance(i, str):
                     raise exceptions.ParseError("One of your elements is not a string")
                 else:
+                    if (get_one({"url": i})):
+                        raise exceptions.ParseError("Product already stored!")
+
                     result = scraper.scrape(i)
                     result["url"] = i
                     response.append(result)

@@ -13,9 +13,8 @@ def add_one(request):
     product["_id"] = str(product["_id"])
     return product
 
-def get_one(id):
-    product = find_instance(id)
-    return product
+def get_one(request):
+    return products.find_one(request)
 
 def remove_one(id):
     item = find_instance(id)
