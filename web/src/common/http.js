@@ -1,11 +1,11 @@
 export default {
-    get: () => {
-        fetch("/query", {
+    get: (urls) => {
+        fetch("api/v1/parse", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.parse({})
+            body: JSON.stringify({ urls })
         })
         .then((result) => result.json());
     }

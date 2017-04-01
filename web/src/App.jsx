@@ -3,8 +3,8 @@ import Query from './query/components/Query';
 export default class App extends React.Component {
     render() {
         return (
-            <div className="container">
-                <h1 className="text-center">Parser</h1>
+            <div className="container mt-5">
+                <h1 className="text-center">Product Parser</h1>
                 <Query />
             </div>
         );

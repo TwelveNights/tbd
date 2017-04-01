@@ -78,11 +78,11 @@ class App extends React.Component {
     render() {
         return React.createElement(
             "div",
-            { className: "container" },
+            { className: "container mt-5" },
             React.createElement(
                 "h1",
                 { className: "text-center" },
-                "Parser"
+                "Product Parser"
             ),
             React.createElement(__WEBPACK_IMPORTED_MODULE_0__query_components_Query__["a" /* default */], null)
         );
@@ -103,13 +103,13 @@ module.exports = ReactDOM;
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = {
-    get: () => {
-        fetch("/query", {
+    get: urls => {
+        fetch("api/v1/parse", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.parse({})
+            body: JSON.stringify({ urls })
         }).then(result => result.json());
     }
 };
@@ -129,6 +129,9 @@ class Query extends React.Component {
         this.state = {
             url: ""
         };
+
+        this.onChangeUrl = this.onChangeUrl.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     onChangeUrl(e) {
@@ -137,7 +140,8 @@ class Query extends React.Component {
     }
 
     onSubmit(e) {
-        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get();
+        e.preventDefault();
+        __WEBPACK_IMPORTED_MODULE_0__common_http__["a" /* default */].get([{ url: this.state.url }]);
     }
 
     render() {
@@ -163,7 +167,7 @@ class Query extends React.Component {
                 { className: "form-group text-center" },
                 React.createElement(
                     "button",
-                    { className: "btn btn-primary" },
+                    { type: "submit", onClick: this.onSubmit, className: "btn btn-primary" },
                     "Submit"
                 )
             )
