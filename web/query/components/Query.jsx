@@ -13,15 +13,16 @@ export default class Query extends React.Component {
     }
 
     onChangeUrl(e) {
-        let url = e.currentTarget.value;
-        this.setState({ url });
+        this.setState({ url: e.currentTarget.value });
     }
 
     onSubmit(e) {
         e.preventDefault();
-        http.get([{ url: this.state.url }])
+
+        http.parse([{ url: this.state.url }])
             .then((res) => {
                 this.props.error("");
+                this.props.update(res);
             })
             .catch((res) => {
                 this.props.error(res.message);

@@ -1,12 +1,13 @@
-import Query from './query/components/Query';
+import ProductContainer from './product/containers/ProductContainer';
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
 
+        // TODO: define data usage
         this.state = {
-            err: ""
+            err: "",
         };
 
         this.error = this.error.bind(this);
@@ -23,10 +24,9 @@ export default class App extends React.Component {
                 { this.state.err ?
                     <div className="alert alert-danger" role="alert">
                         { this.state.err }.
-                    </div>
-                    : null
+                    </div> : null
                 }
-                <Query error={ this.error }/>
+                <ProductContainer error={ this.error } />
             </div>
         );
     }

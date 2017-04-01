@@ -1,5 +1,5 @@
 export default {
-    get: (urls) => {
+    parse: (urls) => {
         return fetch("api/v1/parse", {
             method: "POST",
             headers: {
@@ -13,6 +13,21 @@ export default {
                 }).catch((res) => {
                     return Promise.reject({ "message": "JSON is invalid" });
                 });
+        });
+    },
+
+    getProducts: () => {
+        return fetch("api/v1/product");
+    },
+
+    updateProduct: (prod) => {
+        return fetch("api/v1/product", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(prod)
         });
     }
 }
