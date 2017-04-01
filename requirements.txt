@@ -2,3 +2,4 @@ Flask
 Flask-API
 beautifulsoup4
 pymongo
+dryscrape

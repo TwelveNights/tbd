@@ -1,10 +1,11 @@
 from flask_api import FlaskAPI, exceptions
 from flask import request
 from db import *
-import scraper
+from scraper import SimpleScraper
 
 app = FlaskAPI(__name__)
 
+scraper = SimpleScraper()
 
 @app.route('/parse', methods=['GET', 'POST'])
 def parse():
@@ -21,9 +22,8 @@ def parse():
                 if not isinstance(i, str):
                     raise exceptions.ParseError("One of your elements is not a string")
                 else:
-                    result = {}
-                    scraper.ProductPage(i, lambda url, html: scraper.scrape(result, url, html)).crawl()
-                    response.append(result["data"])
+                    result = scraper.scrape(i)
+                    response.append(result)
     else:
         raise exceptions.ParseError("Enter list of urls")
 
@@ -49,10 +49,6 @@ def do_something_with_product():
         data = request.data
         item_id = data["_id"]
         return db.remove_one(item_id)
-
-
-
-
 
 
 """
