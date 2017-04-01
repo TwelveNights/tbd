@@ -65,7 +65,7 @@ def send_to_bestbuy():
     data = {"data": adapter.adapter(request.data)}
     print(data)
     requests.post("http://bestbuy.ca", data=data)
-    return {}, status.HTTP_204_NO_CONTENT
+    return data
 
 """
 { "urls" : ["cs.ubc.ca", "google.com"] }

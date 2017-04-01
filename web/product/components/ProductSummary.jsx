@@ -5,7 +5,8 @@ export default class ProductSummary extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            products: []
+            products: [],
+            response: undefined
         };
 
         this.push = this.push.bind(this);
@@ -22,9 +23,10 @@ export default class ProductSummary extends React.Component {
     }
 
     push() {
-        http.post("/adapter", this.state.products).then(() => {
+        http.post("/adapter", this.state.products).then((data) => {
             this.props.success("Items pushed to BestBuy");
             this.clear(true);
+            this.setState({ response: JSON.stringify(data, null, 4) });
         });
 
     }
@@ -60,14 +62,17 @@ export default class ProductSummary extends React.Component {
 
     render() {
         return (
-            <div className="text-center">
-                <row>
+            <div>
+                <row className="text-center">
                     <button id="push" onClick={ this.push } className="btn btn-success">Push to BestBuy</button>
                     <button id="clear" onClick={ this.clear } className="btn btn-danger">Clear</button>
                 </row>
                 <div id="accordion" role="tablist" aria-multiselectable="true">
                     { this.renderProducts() }
                 </div>
+                <pre>
+                { this.state.response }
+                </pre>
             </div>
         )
     }
