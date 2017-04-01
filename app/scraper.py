@@ -15,12 +15,12 @@ class SimpleScraper:
         if ids:
             if isinstance(ids, str): ids = [ids]
             for id in ids:
-                if 'spec' in id.lower():
+                if 'spec' in id.lower() and [x not in id.lower() for x in ('highlight', 'tooltip', 'link')]:
                     return True
         if classes:
             if isinstance(classes, str):  classes = [classes]
             for class_ in classes:
-                if 'spec' in class_.lower():
+                if 'spec' in class_.lower() and [x not in class_.lower() for x in ('highlight', 'tooltip', 'link')]:
                     return True
         return False
 
@@ -46,8 +46,12 @@ class SimpleScraper:
         try:
             product_dict['name'] = soup.find('h1').string
 
-            # sku_table = soup.find('div', class_='cli_sku-variation')
-            sku_table = soup.find(self.check_tag)
+            lenovo_table = soup.find('table', class_="techSpecs-table")
+            if lenovo_table:
+                sku_table = lenovo_table
+
+            else:
+                sku_table = soup.find(self.check_tag)
 
             features = []
             seen_tags = []
