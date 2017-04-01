@@ -40,7 +40,7 @@ export default class Product extends React.Component {
     render() {
         return (
             <div>
-                <h2 className="text-center">{ this.props.product.name }</h2>
+                <h2 className="text-center"><a href={ this.props.product.url } target='_blank' rel="noopener noreferrer">{ this.props.product.name }</a></h2>
                 <form>
                     { this.renderSpecs() }
                     <div className="form-group row text-center">
