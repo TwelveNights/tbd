@@ -34,7 +34,7 @@ class ProductPage(object):
 
         self.product_dict['specifications'] = features_list
 
-        print(json.dumps(self.product_dict, indent=4))
+        return json.dumps(self.product_dict, indent=4)
 
 
 
